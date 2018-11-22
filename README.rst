@@ -1,5 +1,5 @@
-aiohug
-======
+aiohug_swagger
+==============
 
 |pipeline status| |coverage report|
 
