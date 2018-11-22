@@ -31,7 +31,7 @@ async def _render_template(template):
 
 
 @swagger.spec(exclude=True)
-@routes.get("/")
+@routes.get("/swagger.html")
 async def root():
     return web.Response(
         text=await _render_template("swaggerui.html"), content_type="text/html"
@@ -41,6 +41,7 @@ async def root():
 @swagger.spec(exclude=True)
 @routes.get("/redoc.html")
 async def root():
+
     return web.Response(
         text=await _render_template("redoc.html"), content_type="text/html"
     )

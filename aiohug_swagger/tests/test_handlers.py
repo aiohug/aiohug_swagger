@@ -41,7 +41,7 @@ async def test_swagger_yaml(app, test_client):
 
 async def test_swagger(app, test_client):
     client = await test_client(app)
-    resp = await client.get("/swagger/")
+    resp = await client.get("/redoc.html")
     assert resp.status == 200
     assert resp.content_type == "text/html"
 
