@@ -1,0 +1,4 @@
+include Makefile README.md README.rst README.txt project.ini requirements.txt
+recursive-include aiohug_swagger/jinja2 *
+recursive-include aiohug_swagger/static *
+recursive-include aiohug_swagger/templates *
