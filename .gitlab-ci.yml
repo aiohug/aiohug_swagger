@@ -30,7 +30,6 @@ tests_python37:
   script:
     - pip install twine
     - python setup.py sdist
-    - twine register -r aiohug_swagger --repository-url=https://github.com/nonamenix/aiohug_swagger dist/*
     - twine upload dist/*
   when: on_success
   environment:
