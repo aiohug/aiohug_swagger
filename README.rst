@@ -11,5 +11,6 @@ aiohug_swagger
 Goal
 ====
 
-Generate swagger annotation for docs generation
+Provide swagger annotation for aiohug_ handlers.
 
+.. _aiohug: https://github.com/nonamenix/aiohug
