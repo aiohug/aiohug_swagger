@@ -8,8 +8,8 @@ aiohug_swagger
 .. |coverage report| image:: https://gitlab.com/nonamenix/aiohug_swagger/badges/master/coverage.svg
    :target: https://gitlab.com/nonamenix/aiohug_swagger/commits/master
 
-Goal:
-======
+Goal
+====
 
 Generate swagger annotation for docs generation
 
