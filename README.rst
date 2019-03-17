@@ -7,7 +7,7 @@ aiohug_swagger
    :target: https://gitlab.com/nonamenix/aiohug_swagger/commits/master
 .. |coverage report| image:: https://gitlab.com/nonamenix/aiohug_swagger/badges/master/coverage.svg
    :target: https://gitlab.com/nonamenix/aiohug_swagger/commits/master
-.. |version| image:: https://badge.fury.io/py/aiohug.svg
+.. |version| image:: https://badge.fury.io/py/aiohug_swagger.svg
    :target: https://badge.fury.io/py/aiohug_swagger
 
 Goal
