@@ -11,13 +11,13 @@ TEST_SETTINGS = settings_test
 
 ci_test:
 	pip install -r $(REQUIREMENTS_TEST)
-	pytest --cov-report html:.reports/coverage --cov-config .coveragerc --cov-report --cov $(PROJECT)
+	pytest --cov-report html:.reports/coverage --cov-config .coveragerc --cov $(PROJECT)
 
 test: venv
 	$(VIRTUAL_ENV)/bin/py.test
 
 test_coverage: venv
-	$(VIRTUAL_ENV)/bin/py.test --cov-report html:.reports/coverage --cov-config .coveragerc --cov-report --cov $(PROJECT)
+	$(VIRTUAL_ENV)/bin/py.test --cov-report html:.reports/coverage --cov-config .coveragerc --cov $(PROJECT)
 
 venv_init:
 	pip install virtualenv
