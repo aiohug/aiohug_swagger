@@ -1,11 +1,11 @@
 import pytest
 
-from aiohug.swagger import get_summary, where_is_parameter
+from aiohug_swagger import get_summary, where_is_parameter
 
 
 def test_get_summary():
     doc = """Some string
-    
+
     Hello
     """
     assert get_summary(doc) == "Some string"
@@ -16,7 +16,7 @@ def test_get_summary_for_empty_string():
 
 
 def test_get_summary_for_none():
-    assert get_summary(None) == None
+    assert get_summary(None) is None
 
 
 @pytest.mark.parametrize(

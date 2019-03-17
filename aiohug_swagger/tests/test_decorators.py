@@ -1,8 +1,7 @@
 import pytest
 from marshmallow import Schema, fields
 
-from aiohug import swagger
-from aiohug.swagger.decorators import ensure_swagger_attr
+import aiohug_swagger as swagger
 
 
 class TestSchema(Schema):
@@ -16,7 +15,7 @@ def test_ensure_swagger_attr():
     with pytest.raises(AttributeError):
         handler.swagger_spec
 
-    ensure_swagger_attr(handler)
+    swagger.ensure_swagger_attr(handler)
     handler.swagger_spec == {"responses": {}}
 
 

@@ -2,7 +2,7 @@ import pytest
 
 from aiohttp import web
 from aiohug import RouteTableDef
-from ..handlers import routes as swagger_handlers
+from aiohug_swagger.handlers import routes as swagger_handlers
 
 
 @pytest.fixture

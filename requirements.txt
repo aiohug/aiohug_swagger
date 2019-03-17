@@ -1,2 +1,3 @@
-aiohug
+aiohug>=0.6
 pyyaml
+apispec==0.39.0

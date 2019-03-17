@@ -9,6 +9,7 @@
 # IDE files
 .idea/
 .tmp/
+.vscode/
 
 # coverage
 .coverage
@@ -22,6 +23,7 @@ docs/_build
 /.venv*
 /activate
 .pytest_cache/
+__pychache__
 
 # dist
 /dist

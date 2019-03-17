@@ -1,9 +1,9 @@
 image: python:3.7-stretch
 
 cache:
-    paths:
-      - .venv
-    untracked: true
+  paths:
+    - .venv
+  untracked: true
 
 stages:
   - tests
