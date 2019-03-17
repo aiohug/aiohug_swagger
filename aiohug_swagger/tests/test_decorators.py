@@ -4,7 +4,7 @@ from marshmallow import Schema, fields
 import aiohug_swagger as swagger
 
 
-class TestSchema(Schema):
+class ExampleTestSchema(Schema):
     field = fields.Integer()
 
 
@@ -21,7 +21,7 @@ def test_ensure_swagger_attr():
 
 def test_response():
     code = 201
-    schema = TestSchema
+    schema = ExampleTestSchema
     description = "test"
 
     @swagger.response(code, schema=schema, description=description)

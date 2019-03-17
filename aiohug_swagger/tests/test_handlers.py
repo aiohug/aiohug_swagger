@@ -19,8 +19,8 @@ def app() -> web.Application:
     return app
 
 
-async def test_swagger_json(app, test_client):
-    client = await test_client(app)
+async def test_swagger_json(app, aiohttp_client):
+    client = await aiohttp_client(app)
     resp = await client.get("/swagger.json")
     body = await resp.json()
     assert resp.status == 200
@@ -29,8 +29,8 @@ async def test_swagger_json(app, test_client):
     # assert body == {}
 
 
-async def test_swagger_yaml(app, test_client):
-    client = await test_client(app)
+async def test_swagger_yaml(app, aiohttp_client):
+    client = await aiohttp_client(app)
     resp = await client.get("/swagger.yaml")
     assert resp.status == 200
     assert resp.content_type == "text/yaml"
@@ -39,8 +39,8 @@ async def test_swagger_yaml(app, test_client):
     # assert text == ''
 
 
-async def test_swagger(app, test_client):
-    client = await test_client(app)
+async def test_swagger(app, aiohttp_client):
+    client = await aiohttp_client(app)
     resp = await client.get("/redoc.html")
     assert resp.status == 200
     assert resp.content_type == "text/html"
