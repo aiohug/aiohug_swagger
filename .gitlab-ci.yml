@@ -18,12 +18,14 @@ tests_python36:
   stage: tests
   script:
     - make ci_test
+    - coveralls
 
 tests_python37:
   image: python:3.7-stretch
   stage: tests
   script:
     - make ci_test
+    - coveralls
 
 .pypi: &upload_base
   stage: upload
