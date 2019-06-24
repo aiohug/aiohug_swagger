@@ -2,22 +2,22 @@ PROJECT = aiohug_swagger
 
 PYTHON_VERSION = 3.6
 REQUIREMENTS = requirements.txt
-REQUIREMENTS_TEST = requirements-test.txt
-VIRTUAL_ENV := .venv
-PYTHON := $(VIRTUAL_ENV)/bin/python
+REQUIREMENTS_TEST = requirements-dev.txt
+VIRTUAL_ENV ?= .venv
+PYTHON ?= $(VIRTUAL_ENV)/bin/python
 PIP_CONF = pip.conf
 PYPI = pypi
 TEST_SETTINGS = settings_test
 
 ci_test:
-	pip install -r requirements-test.txt
-	pytest --cov-report html:.reports/coverage --cov-config .coveragerc --cov-report term:skip-covered --cov $(PROJECT)
+	pip install -r $(REQUIREMENTS_TEST)
+	pytest --cov-report html:.reports/coverage --cov-config .coveragerc --cov $(PROJECT)
 
 test: venv
 	$(VIRTUAL_ENV)/bin/py.test
 
 test_coverage: venv
-	$(VIRTUAL_ENV)/bin/py.test --cov-report html:.reports/coverage --cov-config .coveragerc --cov-report term:skip-covered --cov $(PROJECT)
+	$(VIRTUAL_ENV)/bin/py.test --cov-report html:.reports/coverage --cov-config .coveragerc --cov $(PROJECT)
 
 venv_init:
 	pip install virtualenv

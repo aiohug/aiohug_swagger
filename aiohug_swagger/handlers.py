@@ -3,7 +3,7 @@ import yaml
 from aiohttp import web
 
 from aiohug import RouteTableDef
-from aiohug import swagger
+import aiohug_swagger as swagger
 
 routes = RouteTableDef()
 
@@ -32,7 +32,7 @@ async def _render_template(template):
 
 @swagger.spec(exclude=True)
 @routes.get("/swagger.html")
-async def root():
+async def swagger_html():
     return web.Response(
         text=await _render_template("swaggerui.html"), content_type="text/html"
     )
@@ -40,7 +40,7 @@ async def root():
 
 @swagger.spec(exclude=True)
 @routes.get("/redoc.html")
-async def root():
+async def redoc_html():
 
     return web.Response(
         text=await _render_template("redoc.html"), content_type="text/html"

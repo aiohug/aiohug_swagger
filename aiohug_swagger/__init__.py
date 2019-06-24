@@ -11,7 +11,7 @@ from marshmallow.schema import SchemaMeta
 
 from aiohug.arguments import get_default_args
 from aiohug.directives import get_available_directives
-from .decorators import response, spec
+from .decorators import response, spec, ensure_swagger_attr
 
 logger = logging.getLogger(__name__)
 

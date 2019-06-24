@@ -1,1 +1,9 @@
--r requirements-test.txt
+-r requirements.txt
+
+coverage
+coveralls
+mock
+pytest
+pytest-aiohttp
+pytest-cov
+pytest-env
