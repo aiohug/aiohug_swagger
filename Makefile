@@ -2,7 +2,7 @@ PROJECT = aiohug_swagger
 
 PYTHON_VERSION = 3.6
 REQUIREMENTS = requirements.txt
-REQUIREMENTS_TEST = requirements-dev.txt
+REQUIREMENTS_TEST = requirements-test.txt
 VIRTUAL_ENV ?= .venv
 PYTHON ?= $(VIRTUAL_ENV)/bin/python
 PIP_CONF = pip.conf

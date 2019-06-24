@@ -3,10 +3,10 @@ aiohug_swagger
 
 |version| |pipeline status| |coverage report|
 
-.. |pipeline status| image:: https://gitlab.com/nonamenix/aiohug_swagger/badges/master/pipeline.svg
-   :target: https://gitlab.com/nonamenix/aiohug_swagger/commits/master
-.. |coverage report| image:: https://coveralls.io/repos/github/nonamenix/aiohug_swagger/badge.svg?branch=HEAD
-   :target: https://coveralls.io/github/nonamenix/aiohug_swagger?branch=HEAD
+.. |pipeline status| image:: https://api.travis-ci.org/aiohug/aiohug_swagger.svg?branch=master
+   :target: https://travis-ci.org/aiohug/aiohug_swagger
+.. |coverage report| image:: https://coveralls.io/repos/github/aiohug/aiohug_swagger/badge.svg?branch=master
+   :target: https://coveralls.io/github/aiohug/aiohug_swagger?branch=master
 .. |version| image:: https://badge.fury.io/py/aiohug_swagger.svg
    :target: https://badge.fury.io/py/aiohug_swagger
 
