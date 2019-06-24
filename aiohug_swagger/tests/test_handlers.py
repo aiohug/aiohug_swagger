@@ -1,7 +1,7 @@
 import pytest
-
 from aiohttp import web
 from aiohug import RouteTableDef
+
 from aiohug_swagger.handlers import routes as swagger_handlers
 
 
@@ -22,11 +22,9 @@ def app() -> web.Application:
 async def test_swagger_json(app, aiohttp_client):
     client = await aiohttp_client(app)
     resp = await client.get("/swagger.json")
-    body = await resp.json()
     assert resp.status == 200
+    await resp.json()
     assert resp.content_type == "application/json"
-
-    # assert body == {}
 
 
 async def test_swagger_yaml(app, aiohttp_client):
@@ -34,9 +32,15 @@ async def test_swagger_yaml(app, aiohttp_client):
     resp = await client.get("/swagger.yaml")
     assert resp.status == 200
     assert resp.content_type == "text/yaml"
-    text = await resp.text()
+    await resp.text()
 
-    # assert text == ''
+
+async def test_swagger_html(app, aiohttp_client):
+    client = await aiohttp_client(app)
+    resp = await client.get("/swagger.html")
+    assert resp.status == 200
+    assert resp.content_type == "text/html"
+    await resp.text()
 
 
 async def test_swagger(app, aiohttp_client):
@@ -44,5 +48,3 @@ async def test_swagger(app, aiohttp_client):
     resp = await client.get("/redoc.html")
     assert resp.status == 200
     assert resp.content_type == "text/html"
-
-    # text = await resp.text()

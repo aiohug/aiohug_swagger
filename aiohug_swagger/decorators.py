@@ -1,7 +1,7 @@
 from typing import Optional, Iterable
 
 
-def ensure_swagger_attr(handler):
+def _ensure_swagger_attr(handler):
     try:
         handler.swagger_spec
     except AttributeError:
@@ -12,7 +12,7 @@ def response(response_code, schema=None, description=None):
     """A decorator that adds swagger response"""
 
     def decorator(handler):
-        ensure_swagger_attr(handler)
+        _ensure_swagger_attr(handler)
         handler.swagger_spec["responses"][response_code] = {}
         if schema is not None:
             handler.swagger_spec["responses"][response_code]["schema"] = schema
@@ -33,7 +33,7 @@ def spec(
     response_codes: Optional[Iterable] = None,
 ):
     def decorator(handler):
-        ensure_swagger_attr(handler)
+        _ensure_swagger_attr(handler)
         handler.swagger_spec["private"] = private
         handler.swagger_spec["exclude"] = exclude
         handler.swagger_spec["deprecated"] = deprecated

@@ -30,3 +30,5 @@ __pychache__
 /*.egg-info
 
 .reports
+
+.tox/
