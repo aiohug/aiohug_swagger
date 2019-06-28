@@ -66,8 +66,6 @@ def get_parameters(url: str, handler, spec, converter):
 
             parameter["required"] = required
             parameters.append(parameter)
-
-            parameters.append(parameter)
         elif name == "body":
             is_schema_class = isclass(parameter_kind) and issubclass(parameter_kind, Schema)
             if not isinstance(parameter_kind, Schema) and not is_schema_class:
@@ -81,7 +79,7 @@ def get_parameters(url: str, handler, spec, converter):
             except DuplicateComponentNameError:  # schemas can be reused, no big deal
                 pass
 
-            ref_definition = "#/definitions/{}".format(schema_name)
+            ref_definition = "#/components/schemas/{}".format(schema_name)
             ref_schema = {"$ref": ref_definition}
 
             parameters.append(
@@ -129,7 +127,8 @@ def generate_spec(
 
         handler_spec = getattr(handler, "swagger_spec", {})
 
-        handler_spec["summary"] = get_summary(handler.__doc__)
+        summary = get_summary(handler.__doc__)
+        handler_spec["summary"] = summary or url
         handler_spec["description"] = handler.__doc__
 
         parameters = get_parameters(url, handler, spec, converter)
