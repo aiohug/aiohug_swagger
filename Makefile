@@ -13,11 +13,11 @@ ci_test:
 	pip install -r $(REQUIREMENTS_TEST)
 	make tox
 
-test: venv
+test:
 	$(VIRTUAL_ENV)/bin/py.test
 
-test_coverage: venv
-	$(VIRTUAL_ENV)/bin/py.test --cov-config .coveragerc --cov $(PROJECT)
+test_coverage:
+	$(VIRTUAL_ENV)/bin/py.test --cov-report html:.reports/coverage --cov-config .coveragerc --cov $(PROJECT)
 
 tox:
 	pip install tox
