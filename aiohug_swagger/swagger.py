@@ -56,12 +56,16 @@ def get_parameters(url: str, handler, spec, converter):
             parameter_kind.metadata = {"location": parameter_place}
 
             has_default = handler_parameter.default != Parameter.empty
-            parameter_kind.required = not has_default
 
             parameter = converter.field2parameter(parameter_kind, name=name, default_in=parameter_place)
 
+            required = True
             if has_default:
                 parameter["default"] = handler_parameter.default
+                required = False
+
+            parameter["required"] = required
+            parameters.append(parameter)
 
             parameters.append(parameter)
         elif name == "body":
