@@ -1,4 +1,3 @@
-import importlib
 import logging
 from inspect import signature, Parameter, isclass
 from typing import Optional, Tuple
@@ -17,7 +16,6 @@ DEFAULT_SCHEMES = ("http",)
 DEFAULT_VERSION = None
 DEFAULT_OPENAPI_VERSION = "3.0.2"
 DEFAULT_TITLE = "Swagger Application"
-DEFAULT_DEFINITIONS_PATH = None
 DEFAULT_TESTING_MODE = False
 DEFAULT_USE_DEFAULT_RESPONSE = True
 DEFAULT_DESCRIPTION = None
@@ -96,7 +94,6 @@ def generate_spec(
     openapi_version: str = DEFAULT_OPENAPI_VERSION,
     host: str = DEFAULT_HOST,
     schemes: Tuple[str, ...] = DEFAULT_SCHEMES,
-    definitions_path: Optional[str] = DEFAULT_DEFINITIONS_PATH,
     **options
 ):
     options["host"] = host
@@ -108,14 +105,6 @@ def generate_spec(
         title=title, version=version, openapi_version=openapi_version, plugins=(marshmallow_plugin,), **options
     )
     converter = OpenAPIConverter(openapi_version=openapi_version, schema_name_resolver=resolver, spec=spec)
-
-    if definitions_path is not None:
-        definitions = importlib.import_module(definitions_path)
-
-        for name, schema in definitions.__dict__.items():
-            if issubclass(schema, Schema):
-                schema_name = resolver(schema)
-                spec.components.schema(schema_name, schema=schema)
 
     for route in app.router.routes():
         resource = route.resource
