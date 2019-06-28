@@ -37,7 +37,12 @@ def where_is_parameter(name, url):
 
 
 def get_parameters(url: str, handler, spec, converter):
-    handler_signature = signature(handler._original_handler)
+    original_handler = getattr(handler, "_original_handler", None)
+    if original_handler is None:
+        # some routes might be created without aiohug decorator, can't do anything about them
+        return
+
+    handler_signature = signature(original_handler)
 
     parameters = []
     for name, handler_parameter in handler_signature.parameters.items():
