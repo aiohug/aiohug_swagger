@@ -119,34 +119,25 @@ def generate_spec(
                 schema_name = resolver(schema)
                 spec.components.schema(schema_name, schema=schema)
 
-    resources = app.router._resources
-    for resource in resources:
+    for route in app.router.routes():
+        resource = route.resource
+
         url = resource.canonical
-        name = resource.name
-        for route in resource._routes:
-            method = route.method
-            if method == "HEAD":
-                continue
+        method = route.method
 
-            handler = route._handler
+        handler = route.handler
 
-            try:
-                handler_spec = handler.swagger_spec
-            except AttributeError:
-                handler_spec = {}
+        handler_spec = getattr(handler, "swagger_spec", {})
 
-            if "excluded" in handler_spec:  # TODO: why?
-                continue
+        handler_spec["summary"] = get_summary(handler.__doc__)
+        handler_spec["description"] = handler.__doc__
 
-            handler_spec["summary"] = get_summary(handler.__doc__)
-            handler_spec["description"] = handler.__doc__
+        parameters = get_parameters(url, handler, spec, converter)
+        if parameters:
+            handler_spec["parameters"] = parameters
 
-            parameters = get_parameters(url, handler, spec, converter)
-            if parameters:
-                handler_spec["parameters"] = parameters
+        handler_spec["operationId"] = resource.name
 
-            handler_spec["operationId"] = name
-
-            spec.path(url, operations={method.lower(): handler_spec})
+        spec.path(url, operations={method.lower(): handler_spec})
 
     return spec.to_dict()
