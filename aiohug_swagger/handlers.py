@@ -1,24 +1,25 @@
 import os
+
 import yaml
 from aiohttp import web
-
 from aiohug import RouteTableDef
-import aiohug_swagger as swagger
+
+from aiohug_swagger import generate_spec, spec
 
 routes = RouteTableDef()
 
 
-@swagger.spec(exclude=True)
+@spec(exclude=True)
 @routes.get("/swagger.json")
 async def swagger_json(request):
-    return swagger.generate_swagger(request.app)
+    return generate_spec(request.app)
 
 
-@swagger.spec(exclude=True)
+@spec(exclude=True)
 @routes.get("/swagger.yaml")
 async def swagger_yaml(request):
     return web.Response(
-        text=yaml.dump(swagger.generate_swagger(request.app)), content_type="text/yaml"
+        text=yaml.dump(generate_spec(request.app)), content_type="text/yaml"
     )
 
 
@@ -30,7 +31,7 @@ async def _render_template(template):
         return template.read().replace("{{ swagger_url }}", "/swagger.json")
 
 
-@swagger.spec(exclude=True)
+@spec(exclude=True)
 @routes.get("/swagger.html")
 async def swagger_html():
     return web.Response(
@@ -38,10 +39,9 @@ async def swagger_html():
     )
 
 
-@swagger.spec(exclude=True)
+@spec(exclude=True)
 @routes.get("/redoc.html")
 async def redoc_html():
-
     return web.Response(
         text=await _render_template("redoc.html"), content_type="text/html"
     )

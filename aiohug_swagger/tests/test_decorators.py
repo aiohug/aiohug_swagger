@@ -1,7 +1,7 @@
 import pytest
 from marshmallow import Schema, fields
 
-import aiohug_swagger as swagger
+from aiohug_swagger.decorators import _ensure_swagger_attr, response, spec
 
 
 class ExampleTestSchema(Schema):
@@ -15,7 +15,7 @@ def test_ensure_swagger_attr():
     with pytest.raises(AttributeError):
         handler.swagger_spec
 
-    swagger.ensure_swagger_attr(handler)
+    _ensure_swagger_attr(handler)
     handler.swagger_spec == {"responses": {}}
 
 
@@ -24,7 +24,7 @@ def test_response():
     schema = ExampleTestSchema
     description = "test"
 
-    @swagger.response(code, schema=schema, description=description)
+    @response(code, schema=schema, description=description)
     def handler():
         pass
 
@@ -36,7 +36,7 @@ def test_response():
 def test_response_code():
     code = 201
 
-    @swagger.response(code)
+    @response(code)
     def handler():
         pass
 
@@ -47,7 +47,7 @@ def test_response_code():
 def test_spec():
     attrs = {"private": True, "exclude": True, "deprecated": True, "tags": ["test"]}
 
-    @swagger.spec(**attrs)
+    @spec(**attrs)
     def handler():
         pass
 
@@ -58,7 +58,7 @@ def test_spec():
 def test_spec_response_codes():
     codes = [200, 409]
 
-    @swagger.spec(response_codes=codes)
+    @spec(response_codes=codes)
     def handler():
         pass
 
