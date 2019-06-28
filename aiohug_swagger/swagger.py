@@ -46,7 +46,7 @@ def get_parameters(url: str, handler, spec, converter):
     for name, handler_parameter in handler_signature.parameters.items():
         parameter_kind = handler_parameter.annotation  # TODO: support `args` argument to route decorator
 
-        if name in get_available_directives() and name != "body" or name == "request":
+        if name in get_available_directives() and name != "body":
             continue
 
         if isinstance(parameter_kind, fields.Field):

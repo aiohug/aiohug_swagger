@@ -1,8 +1,7 @@
-from pprint import pprint
-
 import pytest
 from aiohttp import web
 from aiohug import RouteTableDef
+from aiohug.directives import directive
 from marshmallow import fields, Schema
 
 from aiohug_swagger.swagger import (
@@ -84,6 +83,54 @@ def test_with_request_parameter(make_app):
     assert "parameters" not in spec["paths"]["/"]["get"]
 
 
+def test_aiohttp_routes(make_app):
+    aiohttp_routes = web.RouteTableDef()
+
+    @aiohttp_routes.get("/")
+    async def aiohttp_handler():
+        return "foo"
+
+    app = make_app(aiohttp_routes)
+    spec = generate_spec(app)
+    assert "parameters" not in spec["paths"]["/"]["get"]
+
+
+def test_custom_directive(make_app):
+    routes = RouteTableDef()
+
+    @directive
+    def my_directive(request):
+        return request
+
+    @routes.get("/")
+    async def aiohttp_handler(my_directive):
+        return "foo"
+
+    app = make_app(routes)
+    spec = generate_spec(app)
+    assert "parameters" not in spec["paths"]["/"]["get"]
+
+
+def test_wrong_body_type(make_app):
+    routes = RouteTableDef()
+
+    class A:
+        pass
+
+    @routes.get("/")
+    async def with_class(body: A):
+        return "foo"
+
+    @routes.get("/foo")
+    async def with_instance(body: A()):
+        return "foo"
+
+    app = make_app(routes)
+    spec = generate_spec(app)
+    assert "parameters" not in spec["paths"]["/"]["get"]
+    assert "parameters" not in spec["paths"]["/foo"]["get"]
+
+
 def test_with_validated_parameter(make_app):
     routes = RouteTableDef()
 
@@ -121,7 +168,6 @@ def test_with_default_parameter(make_app):
 
     app = make_app(routes)
     spec = generate_spec(app)
-    pprint(spec)
 
     parameter = spec["paths"]["/"]["get"]["parameters"][0]
 
@@ -148,7 +194,6 @@ def test_with_body_schema(make_app):
 
     app = make_app(routes)
     spec = generate_spec(app)
-    pprint(spec)
 
     schema_name = f"{with_body_schema_class._original_handler.__module__}.BodySchema"
 
@@ -156,14 +201,14 @@ def test_with_body_schema(make_app):
     assert foo_parameter["in"] == "body"
     assert foo_parameter["name"] == "body"
     assert foo_parameter["required"]
-    assert foo_parameter["schema"] == {"$ref": f"#/definitions/{schema_name}"}
+    assert foo_parameter["schema"] == {"$ref": f"#/components/schemas/{schema_name}"}
 
     bar_parameter = spec["paths"]["/bar"]["post"]["parameters"][0]
 
     assert bar_parameter["in"] == "body"
     assert bar_parameter["name"] == "body"
     assert bar_parameter["required"]
-    assert bar_parameter["schema"] == {"$ref": f"#/definitions/{schema_name}"}
+    assert bar_parameter["schema"] == {"$ref": f"#/components/schemas/{schema_name}"}
 
     schema = spec["components"]["schemas"][schema_name]
 
